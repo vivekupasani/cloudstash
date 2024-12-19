@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "973096622185",
+    "project_id": "cloudstash-c",
+    "storage_bucket": "cloudstash-c.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:973096622185:android:c4c1e246359c66c56a6af8",
+        "android_client_info": {
+          "package_name": "com.vivekupasani.docs"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBb2goGmm9pO8cWLQD2FPm15L8vITJ_TNM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
