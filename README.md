@@ -35,8 +35,8 @@ CloudStash can be integrated with a **Flutter** frontend for seamless mobile or 
 
 1. **Clone the repository**:
    ```bash
-   git clone https://github.com/vivekupasani/cloudstash-backend.git
-   cd cloudstash-backend
+   git clone https://github.com/vivekupasani/cloudstash.git
+   cd cloudstash
 2. **Install dependencies**:
    ```bash
    npm install
