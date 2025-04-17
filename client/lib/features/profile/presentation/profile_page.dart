@@ -1,11 +1,13 @@
-import 'package:cloudstash/features/auth/domain/auth_repo.dart';
-import 'package:cloudstash/features/auth/presentation/cubit/auth_cubit.dart';
-import 'package:cloudstash/features/home/presentation/settings_page.dart';
-import 'package:cloudstash/features/upload/presentation/upload_page.dart';
-import 'package:cloudstash/features/utils/AvtaarPainter.dart';
+import 'package:cloudstash/features/profile/presentation/edit_profile.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:cloudstash/features/auth/presentation/cubit/auth_cubit.dart';
+import 'package:cloudstash/features/upload/presentation/cubit/files_cubit.dart';
+import 'package:cloudstash/features/home/presentation/components/my_item_tile.dart';
+import 'package:cloudstash/features/home/presentation/settings_page.dart';
+import 'package:cloudstash/features/upload/presentation/upload_page.dart';
+import 'package:cloudstash/features/utils/AvtaarPainter.dart';
 
 class ProfilePage extends StatefulWidget {
   const ProfilePage({super.key});
@@ -15,6 +17,8 @@ class ProfilePage extends StatefulWidget {
 }
 
 class _ProfilePageState extends State<ProfilePage> {
+  late final FilesCubit filesCubit;
+
   @override
   void initState() {
     super.initState();
@@ -28,6 +32,9 @@ class _ProfilePageState extends State<ProfilePage> {
 
     final authCubit = context.read<AuthCubit>();
     authCubit.getUserProfile();
+
+    filesCubit = context.read<FilesCubit>();
+    filesCubit.fetchFiles();
   }
 
   @override
@@ -46,7 +53,7 @@ class _ProfilePageState extends State<ProfilePage> {
               backgroundColor: Colors.white,
               surfaceTintColor: Colors.white,
               elevation: 0,
-              title: Text('My profile'),
+              title: const Text('My profile'),
               actions: [
                 IconButton(
                   icon: const Icon(Icons.settings),
@@ -64,6 +71,7 @@ class _ProfilePageState extends State<ProfilePage> {
             body: SafeArea(
               child: SingleChildScrollView(
                 child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     // Profile card
                     Container(
@@ -124,7 +132,7 @@ class _ProfilePageState extends State<ProfilePage> {
                           const SizedBox(height: 16),
                           Text(
                             state.user.username,
-                            style: TextStyle(
+                            style: const TextStyle(
                               fontSize: 24,
                               fontWeight: FontWeight.bold,
                             ),
@@ -132,7 +140,10 @@ class _ProfilePageState extends State<ProfilePage> {
                           const SizedBox(height: 4),
                           Text(
                             state.user.profession,
-                            style: TextStyle(fontSize: 16, color: Colors.grey),
+                            style: const TextStyle(
+                              fontSize: 16,
+                              color: Colors.grey,
+                            ),
                           ),
                           const SizedBox(height: 8),
                           Text(
@@ -143,6 +154,41 @@ class _ProfilePageState extends State<ProfilePage> {
                               height: 1.5,
                             ),
                             textAlign: TextAlign.center,
+                          ),
+                          SizedBox(height: 12),
+                          ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                              padding: EdgeInsets.symmetric(
+                                vertical: 14.0,
+                                horizontal: 60,
+                              ),
+                              backgroundColor: Colors.blue,
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.all(
+                                  Radius.circular(10),
+                                ),
+                              ),
+                            ),
+                            onPressed: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder:
+                                      (context) => EditProfile(
+                                        name: state.user.username,
+                                        profession: state.user.profession,
+                                        about: state.user.about,
+                                      ),
+                                ),
+                              );
+                            },
+                            child: Text(
+                              'Edit Profile',
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
                           ),
                         ],
                       ),
@@ -188,107 +234,64 @@ class _ProfilePageState extends State<ProfilePage> {
                       ),
                     ),
 
-                    // Folder grid
-                    Padding(
-                      padding: const EdgeInsets.all(16),
-                      child: GridView.builder(
-                        shrinkWrap: true,
-                        physics: const NeverScrollableScrollPhysics(),
-                        gridDelegate:
-                            const SliverGridDelegateWithFixedCrossAxisCount(
-                              crossAxisCount: 2,
-                              childAspectRatio: 1.1,
-                              crossAxisSpacing: 16,
-                              mainAxisSpacing: 16,
-                            ),
-                        itemCount: 8,
-                        itemBuilder: (context, index) {
-                          final colors = [
-                            const Color(0xFFE9F1FF),
-                            const Color(0xFFFFF7E9),
-                            const Color(0xFFFFEAE9),
-                            const Color(0xFFE9FFF8),
-                            const Color(0xFFE9F1FF),
-                            const Color(0xFFFFF7E9),
-                            const Color(0xFFFFEAE9),
-                            const Color(0xFFE9FFF8),
-                          ];
-                          final iconColors = [
-                            Colors.blue[500],
-                            Colors.amber[500],
-                            Colors.red[400],
-                            Colors.cyan[400],
-                            Colors.blue[500],
-                            Colors.amber[500],
-                            Colors.red[400],
-                            Colors.cyan[400],
-                          ];
-                          final titles = [
-                            'Mobile apps',
-                            'SVG icons',
-                            'Prototypes',
-                            'Avatars',
-                            'Mobile apps',
-                            'SVG icons',
-                            'Prototypes',
-                            'Avatars',
-                          ];
+                    // Stash grid
+                    BlocConsumer<FilesCubit, FilesState>(
+                      listener: (context, state) {
+                        if (state is FileError) {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(content: Text(state.message)),
+                          );
+                        }
+                      },
+                      builder: (context, state) {
+                        if (state is FilesLoading) {
+                          return const Center(
+                            child: CircularProgressIndicator(),
+                          );
+                        } else if (state is FilesLoaded) {
+                          final files = state.files;
 
-                          return Container(
-                            decoration: BoxDecoration(
-                              color: colors[index],
-                              borderRadius: BorderRadius.circular(16),
-                            ),
-                            padding: const EdgeInsets.all(16),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Container(
-                                      width: 40,
-                                      height: 40,
-                                      decoration: BoxDecoration(
-                                        color: iconColors[index],
-                                        borderRadius: BorderRadius.circular(8),
-                                      ),
-                                      child: const Icon(
-                                        Icons.folder,
-                                        color: Colors.white,
-                                      ),
-                                    ),
-                                    const Icon(
-                                      Icons.more_vert,
-                                      color: Colors.grey,
-                                    ),
-                                  ],
-                                ),
-                                const Spacer(),
-                                Text(
-                                  titles[index],
-                                  style: const TextStyle(
-                                    fontWeight: FontWeight.w600,
-                                    fontSize: 16,
-                                    color: Colors.black87,
+                          if (files.isEmpty) {
+                            return const Center(
+                              child: Padding(
+                                padding: EdgeInsets.symmetric(vertical: 200.0),
+                                child: Text('No files found'),
+                              ),
+                            );
+                          }
+
+                          return Padding(
+                            padding: const EdgeInsets.all(12.0),
+                            child: GridView.builder(
+                              physics: const NeverScrollableScrollPhysics(),
+                              shrinkWrap: true,
+                              gridDelegate:
+                                  const SliverGridDelegateWithFixedCrossAxisCount(
+                                    crossAxisCount: 2,
+                                    childAspectRatio: 1.1,
+                                    crossAxisSpacing: 16,
+                                    mainAxisSpacing: 16,
                                   ),
-                                ),
-                                const SizedBox(height: 4),
-                                Text(
-                                  index % 2 == 0
-                                      ? 'December 20, 2020'
-                                      : 'December 14, 2020',
-                                  style: TextStyle(
-                                    color: Colors.grey[600],
-                                    fontSize: 12,
-                                  ),
-                                ),
-                              ],
+                              itemCount: state.files.length,
+                              itemBuilder: (context, index) {
+                                final file = state.files[index];
+                                return MyItemTile(file: file);
+                              },
                             ),
                           );
-                        },
-                      ),
+                        } else if (state is FileError) {
+                          return Center(
+                            child: Text(
+                              'Error: ${state.message}',
+                              style: const TextStyle(color: Colors.red),
+                            ),
+                          );
+                        } else {
+                          return const Center(
+                            child: Text('No files available'),
+                          );
+                        }
+                      },
                     ),
                   ],
                 ),

@@ -19,4 +19,6 @@ final class AuthError extends AuthState {
   AuthError(this.message);
 }
 
+final class PasswordChanged extends AuthState {}
+
 final class Unauthenticated extends AuthState {}

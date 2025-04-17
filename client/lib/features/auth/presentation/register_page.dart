@@ -17,6 +17,8 @@ class RegisterPageState extends State<RegisterPage> {
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
   final _confirmPasswordController = TextEditingController();
+  bool _isPasswordVisible = false;
+  bool _isConfirmPasswordVisible = false;
 
   @override
   void initState() {
@@ -95,7 +97,11 @@ class RegisterPageState extends State<RegisterPage> {
           );
         }
         return Scaffold(
-          appBar: AppBar(centerTitle: true, backgroundColor: Colors.white),
+          appBar: AppBar(
+            centerTitle: true,
+            backgroundColor: Colors.white,
+            surfaceTintColor: Colors.white,
+          ),
           body: SafeArea(
             child: Center(
               child: SingleChildScrollView(
@@ -103,7 +109,6 @@ class RegisterPageState extends State<RegisterPage> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
-                    const SizedBox(height: 16),
                     _buildWelcomeImage(),
                     const SizedBox(height: 16),
                     const Text(
@@ -141,22 +146,45 @@ class RegisterPageState extends State<RegisterPage> {
                     const SizedBox(height: 16),
                     TextField(
                       controller: _passwordController,
-                      decoration: const InputDecoration(
+                      decoration: InputDecoration(
                         hintText: 'Password',
-                        prefixIcon: Icon(Icons.lock_outline),
-                        suffixIcon: Icon(Icons.visibility_off_outlined),
+                        prefixIcon: const Icon(Icons.lock_outline),
+                        suffixIcon: IconButton(
+                          icon: Icon(
+                            _isPasswordVisible
+                                ? Icons.visibility_outlined
+                                : Icons.visibility_off_outlined,
+                          ),
+                          onPressed: () {
+                            setState(() {
+                              _isPasswordVisible = !_isPasswordVisible;
+                            });
+                          },
+                        ),
                       ),
-                      obscureText: true,
+                      obscureText: !_isPasswordVisible,
                     ),
                     const SizedBox(height: 16),
                     TextField(
                       controller: _confirmPasswordController,
-                      decoration: const InputDecoration(
+                      decoration: InputDecoration(
                         hintText: 'Confirm password',
-                        prefixIcon: Icon(Icons.lock_outline),
-                        suffixIcon: Icon(Icons.visibility_off_outlined),
+                        prefixIcon: const Icon(Icons.lock_outline),
+                        suffixIcon: IconButton(
+                          icon: Icon(
+                            _isConfirmPasswordVisible
+                                ? Icons.visibility_outlined
+                                : Icons.visibility_off_outlined,
+                          ),
+                          onPressed: () {
+                            setState(() {
+                              _isConfirmPasswordVisible =
+                                  !_isConfirmPasswordVisible;
+                            });
+                          },
+                        ),
                       ),
-                      obscureText: true,
+                      obscureText: !_isConfirmPasswordVisible,
                     ),
                     const SizedBox(height: 32),
                     ElevatedButton(

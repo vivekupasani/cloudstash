@@ -33,7 +33,7 @@ class _SplashPageState extends State<SplashPage> {
             textAlign: TextAlign.center,
           ),
 
-          SizedBox(height: 22),
+          SizedBox(height: 32),
         ],
       ),
     );

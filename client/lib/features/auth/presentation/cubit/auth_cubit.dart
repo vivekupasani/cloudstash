@@ -15,9 +15,7 @@ class AuthCubit extends Cubit<AuthState> {
   void checkAuth() async {
     emit(AuthLoading());
     try {
-      final token = await storageRepo.getToken(
-        "x-auth-token",
-      ); // Await the Future
+      final token = await storageRepo.getToken("x-auth-token");
       if (token == null) {
         emit(Unauthenticated());
         return;
@@ -30,49 +28,49 @@ class AuthCubit extends Cubit<AuthState> {
       _currentuser = user;
       emit(Authenticated(user));
     } catch (e) {
-      emit(AuthError(e.toString()));
+      emit(AuthError("Failed to check authentication. $e"));
     }
   }
 
-  //Sign in with email and password
+  // Sign in with email and password
   Future<void> signIn(String email, String password) async {
     emit(AuthLoading());
     try {
       final user = await authRepo.login(email, password);
       if (user == null) {
-        emit(Unauthenticated());
+        emit(AuthError("Invalid email or password."));
         return;
       }
       _currentuser = user;
 
-      storageRepo.setToken("x-auth-token", user.token!);
+      await storageRepo.setToken("x-auth-token", user.token!);
 
       emit(Authenticated(user));
     } catch (e) {
-      emit(AuthError(e.toString()));
+      emit(AuthError("Failed to sign in. $e"));
     }
   }
 
-  //Sign up with username, email and password
+  // Sign up with username, email, and password
   Future<void> signUp(String username, String email, String password) async {
     emit(AuthLoading());
     try {
       final user = await authRepo.register(username, email, password);
       if (user == null) {
-        emit(Unauthenticated());
+        emit(AuthError("Registration failed. User already exists."));
         return;
       }
       _currentuser = user;
 
-      storageRepo.setToken("x-auth-token", user.token!);
+      await storageRepo.setToken("x-auth-token", user.token!);
 
       emit(Authenticated(user));
     } catch (e) {
-      emit(AuthError(e.toString()));
+      emit(AuthError("Failed to sign up. $e"));
     }
   }
 
-  //Sign out the user
+  // Sign out the user
   Future<void> signOut() async {
     emit(AuthLoading());
     try {
@@ -80,11 +78,11 @@ class AuthCubit extends Cubit<AuthState> {
       _currentuser = null;
       emit(Unauthenticated());
     } catch (e) {
-      emit(AuthError(e.toString()));
+      emit(AuthError("Failed to sign out. $e"));
     }
   }
 
-  //Update the user profile
+  // Update the user profile
   Future<void> updateUser(
     String username,
     String profession,
@@ -104,17 +102,17 @@ class AuthCubit extends Cubit<AuthState> {
         token,
       );
       if (user == null) {
-        emit(Unauthenticated());
+        emit(AuthError("Failed to update profile. Please try again."));
         return;
       }
       _currentuser = user;
       emit(Authenticated(user));
     } catch (e) {
-      emit(AuthError(e.toString()));
+      emit(AuthError("Failed to update profile. $e"));
     }
   }
 
-  //Change the user password
+  // Change the user password
   Future<void> changePassword(String oldPassword, String newPassword) async {
     emit(AuthLoading());
     try {
@@ -123,23 +121,22 @@ class AuthCubit extends Cubit<AuthState> {
         emit(Unauthenticated());
         return;
       }
-      final user = await authRepo.changePassword(
+      final User? success = await authRepo.changePassword(
         oldPassword,
         newPassword,
         token,
       );
-      if (user == null) {
-        emit(Unauthenticated());
+      if (success == null) {
+        emit(AuthError("Failed to change password. Please try again."));
         return;
       }
-      _currentuser = user;
-      emit(Authenticated(user));
+      emit(PasswordChanged());
     } catch (e) {
-      emit(AuthError(e.toString()));
+      emit(AuthError("Failed to change password. $e"));
     }
   }
 
-  //Get the user profile
+  // Get the user profile
   Future<void> getUserProfile() async {
     emit(AuthLoading());
     try {
@@ -150,13 +147,13 @@ class AuthCubit extends Cubit<AuthState> {
       }
       final user = await authRepo.getUser(token);
       if (user == null) {
-        emit(Unauthenticated());
+        emit(AuthError("Failed to fetch user profile. Please try again."));
         return;
       }
       _currentuser = user;
       emit(Authenticated(user));
     } catch (e) {
-      emit(AuthError(e.toString()));
+      emit(AuthError("Failed to fetch user profile. $e"));
     }
   }
 

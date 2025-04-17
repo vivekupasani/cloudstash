@@ -1,4 +1,5 @@
 import 'package:cloudstash/features/auth/presentation/cubit/auth_cubit.dart';
+import 'package:cloudstash/features/auth/presentation/welcome_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -116,9 +117,10 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
             ),
           );
           // Redirect user to login or welcome screen
-          Navigator.of(
-            context,
-          ).pushNamedAndRemoveUntil('/login', (route) => false);
+          Navigator.of(context).pushAndRemoveUntil(
+            MaterialPageRoute(builder: (context) => WelcomeScreen()),
+            (route) => false,
+          );
         }
       },
       child: Scaffold(
