@@ -1,5 +1,8 @@
 const fileModel = require("../models/file.model");
 const mongoose = require("mongoose");
+const NodeCache = require("node-cache");
+
+const myCache = new NodeCache({ stdTTL: 43200 });
 
 exports.uploadFiles = async (req, res) => {
   const { name, userId, file, fileType, fileSize } = req.body;
@@ -15,6 +18,9 @@ exports.uploadFiles = async (req, res) => {
 
     const saveFile = await newFile.save();
 
+    // Invalidate the cache
+    myCache.del("files");
+
     res.status(200).json({ msg: "File uploaded successfully", saveFile });
   } catch (e) {
     console.error("Error during uploading:", e);
@@ -24,7 +30,21 @@ exports.uploadFiles = async (req, res) => {
 
 exports.getFiles = async (req, res) => {
   try {
+    // myCache.flushAll()
+    const getCacheFile = await myCache.get("files");
+
+    if (getCacheFile) {
+      return res.status(200).json({
+        files: getCacheFile,
+        msg: "Files fetched from cache successfully",
+      });
+    }
+
     const getFile = await fileModel.find({ userId: req.user });
+
+    if (getFile) {
+      myCache.set("files", getFile);
+    }
 
     return res
       .status(200)
@@ -53,6 +73,9 @@ exports.renameFile = async (req, res) => {
 
     await file.save();
 
+    // Invalidate the cache
+    myCache.del("files");
+
     res.status(200).json({ msg: "File updated successfully", file });
   } catch (e) {
     console.error("Error during updating:", e);
@@ -74,6 +97,9 @@ exports.deleteFile = async (req, res) => {
     if (!deleteFile) {
       return res.status(404).json({ msg: "File not found" });
     }
+
+    // Invalidate the cache
+    myCache.del("files");
 
     return res.status(200).json({ msg: "File deleted successfully" });
   } catch (e) {

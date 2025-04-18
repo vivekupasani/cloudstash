@@ -3,10 +3,10 @@ const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const { validationResult } = require("express-validator");
 
-const JWT_SECRET = process.env.JWT_SECRET;
-const SALT = process.env.SALT || 10;
+const JWT_SECRET = process.env.JWT_SECRET || "default_jwt_secret";
+const SALT = parseInt(process.env.SALT, 10) || 10;
 
-//Register
+// Register
 exports.register = async (req, res) => {
   const errors = validationResult(req);
 
@@ -27,8 +27,7 @@ exports.register = async (req, res) => {
     }
 
     // Hash password
-
-    const hashedPassword = await bcrypt.hash(password, 10);
+    const hashedPassword = await bcrypt.hash(password, SALT);
     const newUser = new userModel({
       username,
       email,
@@ -55,7 +54,7 @@ exports.register = async (req, res) => {
   }
 };
 
-//Login
+// Login
 exports.login = async (req, res) => {
   const errors = validationResult(req);
 
@@ -96,12 +95,17 @@ exports.login = async (req, res) => {
   }
 };
 
-//Profile
+// Profile
 exports.profile = async (req, res) => {
   try {
+    // Fetch user details from the database
     const user = await userModel.findById(req.user);
 
-    res.json({ user: user, token: req.token });
+    if (!user) {
+      return res.status(404).json({ msg: "User not found" });
+    }
+
+    res.status(200).json({ msg: "Profile fetched successfully", user });
   } catch (error) {
     console.error("Error fetching user details:", error);
     res
@@ -110,7 +114,7 @@ exports.profile = async (req, res) => {
   }
 };
 
-//Update Profile
+// Update Profile
 exports.updateProfile = async (req, res) => {
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
@@ -141,7 +145,7 @@ exports.updateProfile = async (req, res) => {
   }
 };
 
-//Change Password
+// Change Password
 exports.changePassword = async (req, res) => {
   const { oldPassword, newPassword } = req.body;
   try {
@@ -150,14 +154,14 @@ exports.changePassword = async (req, res) => {
       return res.status(404).json({ msg: "User not found" });
     }
 
-    //validate old password
+    // Validate old password
     const isMatch = await bcrypt.compare(oldPassword, user.password);
     if (!isMatch) {
       return res.status(400).json({ msg: "Invalid old password" });
     }
 
     // Hash new password
-    const hashedPassword = await bcrypt.hash(newPassword, 10);
+    const hashedPassword = await bcrypt.hash(newPassword, SALT);
 
     user.password = hashedPassword;
     const updatedUser = await user.save();
