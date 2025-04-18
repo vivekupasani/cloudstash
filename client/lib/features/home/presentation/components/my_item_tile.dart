@@ -245,66 +245,70 @@ class _MyItemTileState extends State<MyItemTile> {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () {
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) {
-              return ViewStash(
-                fileModel: widget.file,
-                backgroundColor: colors[index],
-                color: iconColors[index],
-              );
-            },
+    return ConstrainedBox(
+      constraints: BoxConstraints(maxHeight: 200, maxWidth: 200),
+      child: GestureDetector(
+        onTap: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) {
+                return ViewStash(
+                  fileModel: widget.file,
+                  backgroundColor: colors[index],
+                  color: iconColors[index],
+                );
+              },
+            ),
+          );
+        },
+        child: Container(
+          decoration: BoxDecoration(
+            color: colors[index],
+            borderRadius: BorderRadius.circular(16),
           ),
-        );
-      },
-      child: Container(
-        decoration: BoxDecoration(
-          color: colors[index],
-          borderRadius: BorderRadius.circular(16),
-        ),
-        padding: const EdgeInsets.all(16),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Container(
-                  width: 40,
-                  height: 40,
-                  decoration: BoxDecoration(
-                    color: iconColors[index],
-                    borderRadius: BorderRadius.circular(8),
+          padding: const EdgeInsets.all(16),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Container(
+                    width: 40,
+                    height: 40,
+                    decoration: BoxDecoration(
+                      color: iconColors[index],
+                      borderRadius: BorderRadius.circular(8),
+                    ),
+                    child: _getFileIcon(widget.file.fileType),
                   ),
-                  child: _getFileIcon(widget.file.fileType),
-                ),
-                GestureDetector(
-                  onTap:
-                      () => onMoreButtonClick(colors[index], iconColors[index]),
-                  child: const Icon(Icons.more_vert, color: Colors.grey),
-                ),
-              ],
-            ),
-            const Spacer(),
-            Text(
-              widget.file.name.length > 18
-                  ? "${widget.file.name.substring(0, 17)}.${widget.file.fileType}"
-                  : widget.file.name,
-              style: const TextStyle(
-                fontWeight: FontWeight.w600,
-                fontSize: 16,
-                color: Colors.black87,
+                  GestureDetector(
+                    onTap:
+                        () =>
+                            onMoreButtonClick(colors[index], iconColors[index]),
+                    child: const Icon(Icons.more_vert, color: Colors.grey),
+                  ),
+                ],
               ),
-            ),
-            const SizedBox(height: 4),
-            Text(
-              _formatDate(widget.file.updatedAt),
-              style: TextStyle(color: Colors.grey[600], fontSize: 12),
-            ),
-          ],
+              const Spacer(),
+              Text(
+                widget.file.name.length > 18
+                    ? "${widget.file.name.substring(0, 17)}.${widget.file.fileType}"
+                    : widget.file.name,
+                style: const TextStyle(
+                  fontWeight: FontWeight.w600,
+                  fontSize: 16,
+                  color: Colors.black87,
+                ),
+              ),
+              const SizedBox(height: 4),
+              Text(
+                _formatDate(widget.file.updatedAt),
+                style: TextStyle(color: Colors.grey[600], fontSize: 12),
+              ),
+            ],
+          ),
         ),
       ),
     );

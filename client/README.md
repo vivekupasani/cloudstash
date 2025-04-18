@@ -1,16 +1,1 @@
-# cloudstash
-
-A new Flutter project.
-
-## Getting Started
-
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+**CloudStash** is a powerful backend system designed to securely store and manage photos. Built using **Flutter**,**Node.js**, **Express.js**, and **MongoDB**, CloudStash provides a fast and reliable cloud storage solution for users to upload, manage, and store images securely. With **Cloudinary** integration for media storage, CloudStash ensures smooth, high-performance image handling.

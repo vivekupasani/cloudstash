@@ -5,7 +5,7 @@ import 'package:cloudstash/features/upload/domain/file_repo.dart';
 import 'package:http/http.dart' as http;
 
 class FileApiRepo implements FileRepo {
-  final baseUrl = "http://192.168.1.11:3000/files";
+  final baseUrl = "https://cloudstash-dka8.onrender.com/files";
 
   @override
   Future<void> deleteFile(String fileId, String token) async {

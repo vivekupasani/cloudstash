@@ -38,7 +38,7 @@ class StorageApiRepo implements StorageRepo {
       final file = File(filePath);
 
       final mimeType = _getMimeType(fileName);
-      debugPrint("Uploading file: $fileName with MIME type: $mimeType");
+      // debugPrint("Uploading file: $fileName with MIME type: $mimeType");
 
       final ref = storage.ref().child('cloudstash/media/$fileName');
       final metadata = SettableMetadata(contentType: mimeType);
@@ -46,10 +46,10 @@ class StorageApiRepo implements StorageRepo {
       await ref.putFile(file, metadata);
       final downloadUrl = await ref.getDownloadURL();
 
-      debugPrint("Download URL: $downloadUrl");
+      // debugPrint("Download URL: $downloadUrl");
       return downloadUrl;
     } catch (e) {
-      debugPrint("Error in uploadProfileImageMobile: $e");
+      // debugPrint("Error in uploadProfileImageMobile: $e");
       return null;
     }
   }
@@ -63,7 +63,7 @@ class StorageApiRepo implements StorageRepo {
       final FirebaseStorage storage = FirebaseStorage.instance;
 
       final mimeType = _getMimeType(fileName);
-      debugPrint("Uploading file: $fileName with MIME type: $mimeType");
+      // debugPrint("Uploading file: $fileName with MIME type: $mimeType");
 
       final ref = storage.ref().child('cloudstash/media/$fileName');
       final metadata = SettableMetadata(contentType: mimeType);
@@ -71,10 +71,10 @@ class StorageApiRepo implements StorageRepo {
       await ref.putData(bytes, metadata);
       final downloadUrl = await ref.getDownloadURL();
 
-      debugPrint("Download URL: $downloadUrl");
+      // debugPrint("Download URL: $downloadUrl");
       return downloadUrl;
     } catch (e) {
-      debugPrint("Error in uploadProfileImageWeb: $e");
+      // debugPrint("Error in uploadProfileImageWeb: $e");
       return null;
     }
   }

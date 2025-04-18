@@ -98,37 +98,39 @@ class _SettingsPageState extends State<SettingsPage> {
               builder: (context, state) {
                 final email = authCubit.currentuser?.email ?? '';
 
-                return Column(
-                  children: [
-                    GestureDetector(
-                      onTap: () {
-                        Navigator.push(
+                return Center(
+                  child: Column(
+                    children: [
+                      GestureDetector(
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder:
+                                  (context) => ForgotPasswordPage(email: email),
+                            ),
+                          );
+                        },
+                        child: _buildSettingItem(
                           context,
-                          MaterialPageRoute(
-                            builder:
-                                (context) => ForgotPasswordPage(email: email),
-                          ),
-                        );
-                      },
-                      child: _buildSettingItem(
-                        context,
-                        "Change password",
-                        Colors.white,
-                        Colors.black,
-                        false,
+                          "Change password",
+                          Colors.white,
+                          Colors.black,
+                          false,
+                        ),
                       ),
-                    ),
-                    GestureDetector(
-                      onTap: logout,
-                      child: _buildSettingItem(
-                        context,
-                        "Logout",
-                        Colors.redAccent,
-                        Colors.white,
-                        true,
+                      GestureDetector(
+                        onTap: logout,
+                        child: _buildSettingItem(
+                          context,
+                          "Logout",
+                          Colors.redAccent,
+                          Colors.white,
+                          true,
+                        ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 );
               },
             ),
@@ -148,6 +150,7 @@ class _SettingsPageState extends State<SettingsPage> {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
       child: Container(
+        constraints: BoxConstraints(maxWidth: 720),
         width: double.infinity,
         height: 70,
         decoration: BoxDecoration(

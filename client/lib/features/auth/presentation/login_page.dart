@@ -1,6 +1,7 @@
 import 'package:cloudstash/features/auth/presentation/cubit/auth_cubit.dart';
 import 'package:cloudstash/features/auth/presentation/register_page.dart';
 import 'package:cloudstash/features/home/presentation/home_page.dart';
+import 'package:cloudstash/responsive/container_responsive.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -77,9 +78,11 @@ class _LoginPageState extends State<LoginPage> {
       },
       builder: (context, state) {
         if (state is AuthLoading) {
-          return const Center(child: CircularProgressIndicator());
+          return const Scaffold(
+            body: Center(child: CircularProgressIndicator()),
+          );
         }
-        return Scaffold(
+        return ContainerResponsive(
           appBar: AppBar(
             centerTitle: true,
             backgroundColor: Colors.white,

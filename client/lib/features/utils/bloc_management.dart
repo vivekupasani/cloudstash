@@ -1,5 +1,4 @@
 import 'package:cloudstash/features/auth/data/auth_api_repo.dart';
-import 'package:cloudstash/features/auth/domain/auth_repo.dart';
 import 'package:cloudstash/features/auth/presentation/cubit/auth_cubit.dart';
 import 'package:cloudstash/features/auth/presentation/welcome_screen.dart';
 import 'package:cloudstash/features/home/presentation/home_page.dart';

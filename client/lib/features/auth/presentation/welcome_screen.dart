@@ -1,6 +1,7 @@
 import 'package:cloudstash/features/auth/presentation/login_page.dart';
 import 'package:cloudstash/features/auth/presentation/register_page.dart';
 import 'package:cloudstash/features/utils/Chartpainter.dart';
+import 'package:cloudstash/responsive/container_responsive.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -32,7 +33,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return ContainerResponsive(
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 24.0),

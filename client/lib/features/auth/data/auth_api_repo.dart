@@ -4,7 +4,7 @@ import 'package:cloudstash/features/auth/domain/user.dart';
 import 'package:http/http.dart' as http;
 
 class AuthApiRepo implements AuthRepo {
-  final baseUrl = "http://192.168.1.11:3000/user";
+  final baseUrl = "https://cloudstash-dka8.onrender.com/user";
 
   //changePassword method
   @override

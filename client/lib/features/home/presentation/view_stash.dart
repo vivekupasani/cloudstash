@@ -461,22 +461,27 @@ class _ViewStashState extends State<ViewStash> {
   }
 
   Widget _imageView(String file) {
-    return Padding(
-      padding: const EdgeInsets.only(bottom: 18.0),
-      child: CachedNetworkImage(
-        imageUrl: file,
-        height: 600,
-        width: 600,
-        placeholder:
-            (context, url) => const Center(
-              child: SizedBox(
-                height: 100,
-                width: 100,
-                child: CircularProgressIndicator(),
+    return Center(
+      child: Padding(
+        padding: const EdgeInsets.only(bottom: 18.0),
+        child: CachedNetworkImage(
+          imageUrl: file,
+          height: 600,
+          width: 600,
+          placeholder:
+              (context, url) => const Center(
+                child: SizedBox(
+                  height: 50,
+                  width: 50,
+                  child: CircularProgressIndicator(
+                    color: Color.fromARGB(255, 192, 192, 192),
+                  ),
+                ),
               ),
-            ),
-        errorWidget:
-            (context, url, error) => const Icon(Icons.error, color: Colors.red),
+          errorWidget:
+              (context, url, error) =>
+                  const Icon(Icons.error, color: Colors.red),
+        ),
       ),
     );
   }

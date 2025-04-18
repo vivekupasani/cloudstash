@@ -3,6 +3,7 @@ import 'dart:io';
 import 'dart:typed_data';
 
 import 'package:cloudstash/features/upload/presentation/cubit/files_cubit.dart';
+import 'package:cloudstash/responsive/container_responsive.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
@@ -54,11 +55,6 @@ class _UploadPageState extends State<UploadPage>
 
     authCubit = context.read<AuthCubit>();
     filesCubit = context.read<FilesCubit>();
-    debugPrint(
-      authCubit.currentuser != null
-          ? "uid : ${authCubit.currentuser!.id}"
-          : "User is null",
-    );
   }
 
   @override
@@ -166,7 +162,7 @@ class _UploadPageState extends State<UploadPage>
         if (state is FilesLoading || state is FileUploading) {
           return _buildUploadingState(state);
         }
-        return Scaffold(
+        return ContainerResponsive(
           appBar: AppBar(
             backgroundColor: Colors.white,
             elevation: 0,
