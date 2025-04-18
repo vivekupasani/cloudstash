@@ -1,10 +1,15 @@
 import 'package:cloudstash/features/home/presentation/view_stash.dart';
 import 'package:cloudstash/features/upload/domain/File.dart';
 import 'package:cloudstash/features/upload/presentation/cubit/files_cubit.dart';
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'dart:math';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:path_provider/path_provider.dart';
+
+import 'dart:html' as html;
+import 'package:flutter/foundation.dart' show kIsWeb;
 
 class MyItemTile extends StatefulWidget {
   final FileModel file;
@@ -88,6 +93,29 @@ class _MyItemTileState extends State<MyItemTile> {
               SizedBox(height: 20),
               ListTile(
                 leading: Container(
+                  padding: const EdgeInsets.all(8),
+                  decoration: BoxDecoration(
+                    color: color,
+                    borderRadius: const BorderRadius.all(Radius.circular(8)),
+                  ),
+                  child: const Icon(Icons.download, color: Colors.white),
+                ),
+                title: const Text(
+                  'Download',
+                  style: TextStyle(
+                    color: Color.fromARGB(255, 76, 76, 76),
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                onTap: () {
+                  Navigator.pop(context);
+                  _downloadFile(widget.file.file, widget.file.name);
+                },
+              ),
+              const Divider(color: Color.fromARGB(255, 76, 76, 76)),
+
+              ListTile(
+                leading: Container(
                   padding: EdgeInsets.all(8),
                   decoration: BoxDecoration(
                     color: color,
@@ -134,6 +162,56 @@ class _MyItemTileState extends State<MyItemTile> {
         );
       },
     );
+  }
+
+  Future<void> _downloadFile(String file, String fileName) async {
+    final dio = Dio();
+
+    try {
+      if (kIsWeb) {
+        // Web-specific implementation
+        final response = await dio.get(
+          file,
+          options: Options(responseType: ResponseType.bytes),
+        );
+
+        // Create a Blob and trigger the download
+        final blob = html.Blob([response.data]);
+        final url = html.Url.createObjectUrlFromBlob(blob);
+        final anchor =
+            html.AnchorElement(href: url)
+              ..target = 'blank'
+              ..download = fileName
+              ..click();
+        html.Url.revokeObjectUrl(url);
+
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('File downloaded successfully')),
+        );
+      } else {
+        // Non-web platforms (Android, iOS, Desktop)
+        final directory = await getApplicationDocumentsDirectory();
+        final filePath = '${directory.path}/$fileName';
+
+        // Show a loading indicator
+        ScaffoldMessenger.of(
+          context,
+        ).showSnackBar(const SnackBar(content: Text('Downloading...')));
+
+        // Download the file
+        await dio.download(file, filePath);
+
+        // Show success message
+        ScaffoldMessenger.of(
+          context,
+        ).showSnackBar(SnackBar(content: Text('File downloaded to $filePath')));
+      }
+    } catch (e) {
+      // Show error message
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(SnackBar(content: Text('Failed to download file: $e')));
+    }
   }
 
   void _renameFile(String fileName, Color? backgroundColor, Color? color) {
