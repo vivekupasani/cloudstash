@@ -8,7 +8,7 @@ import 'dart:math';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:path_provider/path_provider.dart';
 
-// import 'dart:html' as html;
+import 'dart:html' as html;
 import 'package:flutter/foundation.dart' show kIsWeb;
 
 class MyItemTile extends StatefulWidget {
@@ -175,15 +175,15 @@ class _MyItemTileState extends State<MyItemTile> {
           options: Options(responseType: ResponseType.bytes),
         );
 
-        // // Create a Blob and trigger the download
-        // final blob = html.Blob([response.data]);
-        // final url = html.Url.createObjectUrlFromBlob(blob);
-        // final anchor =
-        //     html.AnchorElement(href: url)
-        //       ..target = 'blank'
-        //       ..download = fileName
-        //       ..click();
-        // html.Url.revokeObjectUrl(url);
+        // Create a Blob and trigger the download
+        final blob = html.Blob([response.data]);
+        final url = html.Url.createObjectUrlFromBlob(blob);
+        final anchor =
+            html.AnchorElement(href: url)
+              ..target = 'blank'
+              ..download = fileName
+              ..click();
+        html.Url.revokeObjectUrl(url);
 
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(content: Text('File downloaded successfully')),
