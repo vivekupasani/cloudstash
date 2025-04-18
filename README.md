@@ -1,53 +1,76 @@
-# **CloudStash - The Ultimate Photo Vault**
+# ☁️ CloudStash
 
-**CloudStash** is a powerful backend system designed to securely store and manage photos. Built using **Flutter**,**Node.js**, **Express.js**, and **MongoDB**, CloudStash provides a fast and reliable cloud storage solution for users to upload, manage, and store images securely. With **Cloudinary** integration for media storage, CloudStash ensures smooth, high-performance image handling.
+**CloudStash** is your personal cross-platform cloud storage solution — simple, fast, and secure. Store, access, and manage all your files (📷 photos, 🎥 videos, 📄 documents, 📊 presentations, 📁 PDFs, and more) from **any device, anywhere**.
 
-## 📱 **Features**
+> Think of it as your own private Google Drive alternative 💾
 
-- 🔒 **User Authentication**: Secure user login and registration using JWT tokens.
-- 📸 **Image Uploads**: Upload and store images securely in Cloudinary.
-- 🌐 **RESTful API Endpoints**: Expose API endpoints for user registration, login, image upload, and profile management.
-- 💾 **MongoDB Integration**: Store user data and image references in MongoDB for scalability and performance.
-- ⚡ **Performance Optimized**: Efficient asynchronous processing and database queries for fast and reliable performance.
+---
 
-## 🛠️ **Built With**
+## 🌐 Cross-Platform
 
-### **Core Technologies**
-- **Flutter**: For cross-platform app development.
-- **Bloc (flutter_bloc)**: Manages app state with the BLoC pattern.
-- **Node.js**: JavaScript runtime for building the backend API.
-- **Express.js**: Web framework for building RESTful APIs.
-- **MongoDB**: NoSQL database for scalable data storage.
-- **Cloudinary**: Cloud-based image storage for secure media handling.
+Built with ❤️ using **Flutter**, CloudStash runs seamlessly on:
 
-### **Additional Packages**
-- **jsonwebtoken (JWT)**: Manages user authentication and token generation.
-- **bcryptjs**: Hashes passwords for secure storage.
-- **mongoose**: MongoDB ODM for data modeling and interaction.
-- **multer**: Handles file uploads to Cloudinary.
-- **dotenv**: Loads environment variables for secure API configuration.
-- **cors**: Manages cross-origin resource sharing for secure API requests.
+- 📱 **Mobile (Android & iOS)**
+- 💻 **Web browsers**
 
-### **Flutter Integration (Frontend)**
-CloudStash can be integrated with a **Flutter** frontend for seamless mobile or web applications. This enables a full-stack solution with image upload and user management.
+---
 
-## 📦 **Installation**
+## 🚀 Features
 
-1. **Clone the repository**:
-   ```bash
-   git clone https://github.com/vivekupasani/cloudstash.git
-   cd cloudstash
-2. **Install dependencies**:
-   ```bash
-   npm install
-3. **Set up environment variables**:
-   ```bash
-   MONGO_URI=your_mongodb_connection_string
-   CLOUDINARY_URL=your_cloudinary_url
-   JWT_SECRET=your_jwt_secret_key
-4. **Run the server**:
-   ```bash
-   npm start
+- 📤 Upload any file (photos, videos, documents, etc.)
+- 🔐 Secure user authentication
+- 🕵️‍♀️ Search specific file from list of files
+- 🖼️ Instant preview for images, videos and PDFs
+- 📥 Download files instantly
+- 🗑️ Delete files when not needed
+- 💡 Clean & intuitive UI
+
+
+---
+
+## 🛠️ Tech Stack
+
+| Frontend         | Backend            | Database        | Storage      |
+|------------------|--------------------|-----------------|-----------------|
+| Flutter (Web & App) | Node.js + Express | MongoDB         | Firebase storage |
+
+---
+
+## 📸 Preview
+<video width="640" height="360" controls>
+  <source src="movie.mp4" type="video/mp4">
+</video>
+
+---
+
+## 🚀 Future Plans
+- 🔄 File sharing & collaboration
+- 🔎 Advanced search and filtering
+- 🧠 AI-based smart organization (like grouping photos/videos)
+
+---
+
+## 🔧 Getting Started
+
+### 1. Clone the repo
+```bash
+git clone https://github.com/vivekupasani/cloudstash.git
+cd cloudstash
+```
+### 2. Setup the backend
+```bash
+cd backend
+npm install
+npm run dev
+```
+Make sure to set up your .env file for MongoDB URI and any other configs.
+### 3.  Setup the Flutter app
+```bash
+cd flutter_app
+flutter pub get
+flutter run
+```
+
 
 ## 🤝 Contributing
 
@@ -65,4 +88,4 @@ Distributed under the MIT License. See `LICENSE` for more information.
 
 ---
 
-Enjoy sharing moments with **Cloudstash**!
+Enjoy sharing moments with **CloudStash**!
