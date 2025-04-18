@@ -18,8 +18,9 @@ exports.uploadFiles = async (req, res) => {
 
     const saveFile = await newFile.save();
 
-    // Invalidate the cache
-    myCache.del("files");
+    // Invalidate the cache for this user
+    const cacheKey = `files_${userId}`;
+    myCache.del(cacheKey);
 
     res.status(200).json({ msg: "File uploaded successfully", saveFile });
   } catch (e) {
@@ -30,8 +31,8 @@ exports.uploadFiles = async (req, res) => {
 
 exports.getFiles = async (req, res) => {
   try {
-    // myCache.flushAll()
-    const getCacheFile = await myCache.get("files");
+    const cacheKey = `files_${req.user}`; // Use user-specific cache key
+    const getCacheFile = myCache.get(cacheKey);
 
     if (getCacheFile) {
       return res.status(200).json({
@@ -43,7 +44,7 @@ exports.getFiles = async (req, res) => {
     const getFile = await fileModel.find({ userId: req.user });
 
     if (getFile) {
-      myCache.set("files", getFile);
+      myCache.set(cacheKey, getFile);
     }
 
     return res
@@ -73,8 +74,9 @@ exports.renameFile = async (req, res) => {
 
     await file.save();
 
-    // Invalidate the cache
-    myCache.del("files");
+    // Invalidate the cache for this user
+    const cacheKey = `files_${userId}`;
+    myCache.del(cacheKey);
 
     res.status(200).json({ msg: "File updated successfully", file });
   } catch (e) {
@@ -98,8 +100,9 @@ exports.deleteFile = async (req, res) => {
       return res.status(404).json({ msg: "File not found" });
     }
 
-    // Invalidate the cache
-    myCache.del("files");
+    // Invalidate the cache for this user
+    const cacheKey = `files_${userId}`;
+    myCache.del(cacheKey);
 
     return res.status(200).json({ msg: "File deleted successfully" });
   } catch (e) {

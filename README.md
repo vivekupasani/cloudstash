@@ -5,7 +5,7 @@
 ## 📱 **Features**
 
 - 🔒 **User Authentication**: Secure user login and registration using JWT tokens.
-- 📸 **Image Uploads**: Upload and store images securely in Cloudinary.
+- 📸 **Media File Uploads**: Upload and store images securely in Cloudinary.
 - 🌐 **RESTful API Endpoints**: Expose API endpoints for user registration, login, image upload, and profile management.
 - 💾 **MongoDB Integration**: Store user data and image references in MongoDB for scalability and performance.
 - ⚡ **Performance Optimized**: Efficient asynchronous processing and database queries for fast and reliable performance.
@@ -18,13 +18,12 @@
 - **Node.js**: JavaScript runtime for building the backend API.
 - **Express.js**: Web framework for building RESTful APIs.
 - **MongoDB**: NoSQL database for scalable data storage.
-- **Cloudinary**: Cloud-based image storage for secure media handling.
+- **Firebase**: Cloud-based file storage for secure media handling.
 
 ### **Additional Packages**
 - **jsonwebtoken (JWT)**: Manages user authentication and token generation.
 - **bcryptjs**: Hashes passwords for secure storage.
 - **mongoose**: MongoDB ODM for data modeling and interaction.
-- **multer**: Handles file uploads to Cloudinary.
 - **dotenv**: Loads environment variables for secure API configuration.
 - **cors**: Manages cross-origin resource sharing for secure API requests.
 
