@@ -101,7 +101,7 @@ exports.deleteFile = async (req, res) => {
     }
 
     // Invalidate the cache for this user
-    const cacheKey = `files_${userId}`;
+    const cacheKey = `files_${req.user}`;
     myCache.del(cacheKey);
 
     return res.status(200).json({ msg: "File deleted successfully" });
