@@ -75,7 +75,7 @@ exports.renameFile = async (req, res) => {
     await file.save();
 
     // Invalidate the cache for this user
-    const cacheKey = `files_${userId}`;
+    const cacheKey = `files_${req.user}`;
     myCache.del(cacheKey);
 
     res.status(200).json({ msg: "File updated successfully", file });
