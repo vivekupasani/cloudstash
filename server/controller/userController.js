@@ -2,9 +2,11 @@ const userModel = require("../models/user.model");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const { validationResult } = require("express-validator");
+const NodeCache = require("node-cache");
 
 const JWT_SECRET = process.env.JWT_SECRET || "default_jwt_secret";
 const SALT = parseInt(process.env.SALT, 10) || 10;
+const userCache = new NodeCache({ stdTTL: 3600 }); // Cache TTL: 1 hour
 
 // Register
 exports.register = async (req, res) => {
@@ -98,12 +100,25 @@ exports.login = async (req, res) => {
 // Profile
 exports.profile = async (req, res) => {
   try {
+    const cacheKey = `user_${req.user}`; // Use user-specific cache key
+    const cachedUser = userCache.get(cacheKey);
+
+    if (cachedUser) {
+      return res.status(200).json({
+        msg: "Profile fetched successfully (from cache)",
+        user: cachedUser,
+      });
+    }
+
     // Fetch user details from the database
     const user = await userModel.findById(req.user);
 
     if (!user) {
       return res.status(404).json({ msg: "User not found" });
     }
+
+    // Cache the user details
+    userCache.set(cacheKey, user);
 
     res.status(200).json({ msg: "Profile fetched successfully", user });
   } catch (error) {
@@ -136,6 +151,10 @@ exports.updateProfile = async (req, res) => {
 
     const updatedUser = await user.save();
 
+    // Invalidate the cache
+    const cacheKey = `user_${req.user}`;
+    userCache.del(cacheKey);
+
     res
       .status(200)
       .json({ msg: "Profile updated successfully", user: updatedUser });
@@ -165,6 +184,10 @@ exports.changePassword = async (req, res) => {
 
     user.password = hashedPassword;
     const updatedUser = await user.save();
+
+    // Invalidate the cache
+    const cacheKey = `user_${req.user}`;
+    userCache.del(cacheKey);
 
     res
       .status(200)
