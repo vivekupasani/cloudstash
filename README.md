@@ -37,9 +37,8 @@ Built with ❤️ using **Flutter**, CloudStash runs seamlessly on:
 ---
 
 ## 📸 Preview
-<video width="640" height="360" controls>
-  <source src="movie.mp4" type="video/mp4">
-</video>
+[🎥 Watch Demo Video](https://github.com/user-attachments/assets/43ec2eb1-0916-4030-aad6-713b65d680f2)
+
 
 ---
 
@@ -89,3 +88,7 @@ Distributed under the MIT License. See `LICENSE` for more information.
 ---
 
 Enjoy sharing moments with **CloudStash**!
+
+
+
+
