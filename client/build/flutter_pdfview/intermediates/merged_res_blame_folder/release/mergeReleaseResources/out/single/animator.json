@@ -1,0 +1,26 @@
+[
+    {
+        "merged": "io.endigo.plugins.pdfviewflutter.flutter_pdfview-release-26:/animator/fragment_open_enter.xml",
+        "source": "io.endigo.plugins.pdfviewflutter.flutter_pdfview-fragment-1.7.1-9:/animator/fragment_open_enter.xml"
+    },
+    {
+        "merged": "io.endigo.plugins.pdfviewflutter.flutter_pdfview-release-26:/animator/fragment_fade_exit.xml",
+        "source": "io.endigo.plugins.pdfviewflutter.flutter_pdfview-fragment-1.7.1-9:/animator/fragment_fade_exit.xml"
+    },
+    {
+        "merged": "io.endigo.plugins.pdfviewflutter.flutter_pdfview-release-26:/animator/fragment_fade_enter.xml",
+        "source": "io.endigo.plugins.pdfviewflutter.flutter_pdfview-fragment-1.7.1-9:/animator/fragment_fade_enter.xml"
+    },
+    {
+        "merged": "io.endigo.plugins.pdfviewflutter.flutter_pdfview-release-26:/animator/fragment_close_enter.xml",
+        "source": "io.endigo.plugins.pdfviewflutter.flutter_pdfview-fragment-1.7.1-9:/animator/fragment_close_enter.xml"
+    },
+    {
+        "merged": "io.endigo.plugins.pdfviewflutter.flutter_pdfview-release-26:/animator/fragment_close_exit.xml",
+        "source": "io.endigo.plugins.pdfviewflutter.flutter_pdfview-fragment-1.7.1-9:/animator/fragment_close_exit.xml"
+    },
+    {
+        "merged": "io.endigo.plugins.pdfviewflutter.flutter_pdfview-release-26:/animator/fragment_open_exit.xml",
+        "source": "io.endigo.plugins.pdfviewflutter.flutter_pdfview-fragment-1.7.1-9:/animator/fragment_open_exit.xml"
+    }
+]

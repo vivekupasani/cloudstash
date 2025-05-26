@@ -1,0 +1,22 @@
+[
+    {
+        "merged": "io.endigo.plugins.pdfviewflutter.flutter_pdfview-release-26:/layout/notification_template_part_time.xml",
+        "source": "io.endigo.plugins.pdfviewflutter.flutter_pdfview-core-1.13.1-15:/layout/notification_template_part_time.xml"
+    },
+    {
+        "merged": "io.endigo.plugins.pdfviewflutter.flutter_pdfview-release-26:/layout/ime_base_split_test_activity.xml",
+        "source": "io.endigo.plugins.pdfviewflutter.flutter_pdfview-core-1.13.1-15:/layout/ime_base_split_test_activity.xml"
+    },
+    {
+        "merged": "io.endigo.plugins.pdfviewflutter.flutter_pdfview-release-26:/layout/notification_template_part_chronometer.xml",
+        "source": "io.endigo.plugins.pdfviewflutter.flutter_pdfview-core-1.13.1-15:/layout/notification_template_part_chronometer.xml"
+    },
+    {
+        "merged": "io.endigo.plugins.pdfviewflutter.flutter_pdfview-release-26:/layout/ime_secondary_split_test_activity.xml",
+        "source": "io.endigo.plugins.pdfviewflutter.flutter_pdfview-core-1.13.1-15:/layout/ime_secondary_split_test_activity.xml"
+    },
+    {
+        "merged": "io.endigo.plugins.pdfviewflutter.flutter_pdfview-release-26:/layout/custom_dialog.xml",
+        "source": "io.endigo.plugins.pdfviewflutter.flutter_pdfview-core-1.13.1-15:/layout/custom_dialog.xml"
+    }
+]

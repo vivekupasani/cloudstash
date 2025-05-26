@@ -1,0 +1,13 @@
+2025/04/17-16:00:19.600 4bdc Reusing MANIFEST C:\Users\Vivek\AppData\Local\Temp\flutter_tools.dbe42c83\flutter_tools_chrome_device.d7fc6aaf\Default\IndexedDB\http_localhost_52200.indexeddb.leveldb/MANIFEST-000001
+2025/04/17-16:00:19.600 4bdc Recovering log #7
+2025/04/17-16:00:19.600 4bdc Reusing old log C:\Users\Vivek\AppData\Local\Temp\flutter_tools.dbe42c83\flutter_tools_chrome_device.d7fc6aaf\Default\IndexedDB\http_localhost_52200.indexeddb.leveldb/000007.log 
+2025/04/17-16:00:19.630 105c Level-0 table #11: started
+2025/04/17-16:00:19.634 105c Level-0 table #11: 645 bytes OK
+2025/04/17-16:00:19.636 105c Delete type=0 #7
+2025/04/17-16:00:19.637 4bdc Manual compaction at level-0 from '\x00\x04\x00\x00\x00' @ 72057594037927935 : 1 .. '\x00\x05\x00\x00\x00' @ 0 : 0; will stop at '\x00\x04\x00\x00\x05' @ 97 : 1
+2025/04/17-16:00:19.637 4bdc Compacting 1@0 + 1@1 files
+2025/04/17-16:00:19.639 4bdc Generated table #12@0: 38 keys, 1186 bytes
+2025/04/17-16:00:19.639 4bdc Compacted 1@0 + 1@1 files => 1186 bytes
+2025/04/17-16:00:19.641 4bdc compacted to: files[ 0 1 1 0 0 0 0 ]
+2025/04/17-16:00:19.642 4bdc Delete type=2 #11
+2025/04/17-16:00:19.643 4bdc Manual compaction at level-0 from '\x00\x04\x00\x00\x05' @ 97 : 1 .. '\x00\x05\x00\x00\x00' @ 0 : 0; will stop at (end)
